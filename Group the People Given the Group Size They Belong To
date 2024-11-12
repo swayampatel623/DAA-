@@ -1,0 +1,36 @@
+class Solution {
+    public List<List<Integer>> groupThePeople(int[] groupSizes) {
+        List<List<Integer>> sizes = new ArrayList<>();
+        HashMap<Integer,LinkedList<Integer>> map =  new HashMap<>();
+
+        for(int i =0;i<groupSizes.length;i++){
+            if(map.get(groupSizes[i]) == null){
+                LinkedList<Integer> list  = new LinkedList<>();
+                list.add(i);
+                map.put(groupSizes[i],list);
+            }else{
+                map.get(groupSizes[i]).add(i);
+            }
+        }
+
+        for(Map.Entry<Integer,LinkedList<Integer>> entry : map.entrySet()){
+            int value = entry.getKey();
+            LinkedList<Integer> list  = new LinkedList<>();
+            int index = 0;
+            LinkedList<Integer> indexValue = entry.getValue();
+            while(index < indexValue.size() ){
+                list.add(indexValue.get(index++));
+                if(list.size() == value){
+                    sizes.add(list);
+                    list  = new LinkedList<>();
+            
+                }
+            }
+
+        }
+
+        return sizes;
+
+
+    }
+}
