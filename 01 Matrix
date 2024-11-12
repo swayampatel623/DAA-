@@ -1,0 +1,47 @@
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        
+        def isIInBounds(i):
+            if 0 <= i and i < len(mat):
+                return True
+            else:
+                return False 
+        
+        def isJInBounds(j):
+            if 0 <= j and j < len(mat[0]):
+                return True
+            else:
+                return False 
+
+        dp = copy.deepcopy(mat)
+        q = []
+
+        for i in range(len(dp)):
+            for j in range(len(dp[0])):
+                if mat[i][j] == 0:
+                    dp[i][j] = 0
+                    q.append((i,j))
+                else:
+                    dp[i][j] = math.inf
+
+        while q:
+            i,j = q.pop(0)
+            currVal = dp[i][j]
+
+            if isIInBounds(i+1) and dp[i+1][j] == math.inf:
+                dp[i+1][j] = currVal + 1
+                q.append((i+1, j))
+            
+            if isIInBounds(i-1) and dp[i-1][j] == math.inf:
+                dp[i-1][j] = currVal + 1
+                q.append((i-1, j))
+            
+            if isJInBounds(j+1) and dp[i][j+1] == math.inf:
+                dp[i][j+1] = currVal + 1
+                q.append((i, j+1))
+            
+            if isJInBounds(j-1) and dp[i][j-1] == math.inf:
+                dp[i][j-1] = currVal + 1
+                q.append((i, j-1))
+
+        return dp
