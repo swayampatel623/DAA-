@@ -1,1 +1,50 @@
+#include <stdio.h>
+#include <string.h>
 
+#define MAX_MOVIES 100
+#define MAX_TITLE_LENGTH 100
+#define MAX_GENRE_LENGTH 100
+
+// Structure to hold movie information
+typedef struct {
+    char title[MAX_TITLE_LENGTH];
+    char genres[MAX_GENRE_LENGTH];
+} Movie;
+
+// Function to get recommendations based on genre similarity
+void get_recommendations(const char* input_genre, Movie movies[], int movie_count) {
+    printf("Recommended Movies:\n");
+    for (int i = 0; i < movie_count; i++) {
+        if (strstr(movies[i].genres, input_genre) != NULL) { // Check if genre matches
+            printf("- %s\n", movies[i].title);
+        }
+    }
+}
+
+int main() {
+    Movie movies[MAX_MOVIES] = {
+        {"Toy Story", "Animation|Adventure|Comedy"},
+        {"Finding Nemo", "Animation|Adventure|Family"},
+        {"The Lion King", "Animation|Adventure|Drama"},
+        {"Monsters, Inc.", "Animation|Adventure|Comedy"},
+        {"The Incredibles", "Animation|Action|Adventure"},
+        {"Up", "Animation|Adventure|Comedy"},
+        {"Avatar", "Action|Adventure|Fantasy"},
+        {"Jurassic Park", "Action|Adventure|Sci-Fi"},
+        {"The Godfather", "Crime|Drama"},
+        {"Schindler's List", "Biography|Drama|History"},
+    };
+    
+    int movie_count = 10; // Total number of movies in the array
+    
+    char input_genre[MAX_GENRE_LENGTH];
+    
+    // Get user input for genre
+    printf("Enter a genre to get movie recommendations (e.g., Animation): ");
+    scanf("%s", input_genre);
+    
+    // Get and display recommendations
+    get_recommendations(input_genre, movies, movie_count);
+    
+    return 0;
+}
